@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "tailwind.config.ts",
-    "css": "src/login/index.css",
+    "css": "src/login/global.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""

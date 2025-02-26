@@ -1,0 +1,6 @@
+.hide-password-toggle::-ms-reveal,
+.hide-password-toggle::-ms-clear {
+  visibility: hidden;
+  pointer-events: none;
+  display: none;
+}

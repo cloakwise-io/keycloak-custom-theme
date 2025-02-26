@@ -48,12 +48,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             {msgStr("doSubmit")}
           </Button>
         </div>
-        <div className="text-center text-sm">
-          {msg("backToLogin")}{" "}
-          <a href={url.loginUrl} className="underline underline-offset-4">
-            {msg("doLogIn")}
-          </a>
-        </div>
+        <Button variant="link" className="w-full text-sm" asChild>
+          <a href={url.loginUrl}>{msg("backToLogin")}</a>
+        </Button>
       </form>
     </Template>
   );

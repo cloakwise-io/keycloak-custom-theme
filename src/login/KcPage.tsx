@@ -1,4 +1,5 @@
-import "./index.css";
+import "./global.css";
+import "./custom.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/login";
 import type { KcContext } from "./KcContext";
@@ -11,16 +12,20 @@ const UserProfileFormFields = lazy(
   () => import("keycloakify/login/UserProfileFormFields")
 );
 
+const CustomUserProfileFormFields = lazy(
+  () => import("./UserProfileFormFields")
+);
+
 const doMakeUserConfirmPassword = true;
 const Login = lazy(() => import("./pages/Login"));
 const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const LoginUsername = lazy(() => import("./pages/LoginUsername"));
 const LoginPassword = lazy(() => import("./pages/LoginPassword"));
+const Register = lazy(() => import("./pages/Register"));
 
 export default function KcPage(props: { kcContext: KcContext }) {
   const { kcContext } = props;
-
   const { i18n } = useI18n({ kcContext });
 
   return (
@@ -65,6 +70,16 @@ export default function KcPage(props: { kcContext: KcContext }) {
                 {...{ kcContext, i18n, classes }}
                 Template={AuthTemplate}
                 doUseDefaultCss={false}
+              />
+            );
+          case "register.ftl":
+            return (
+              <Register
+                {...{ kcContext, i18n, classes }}
+                Template={AuthTemplate}
+                doUseDefaultCss={false}
+                UserProfileFormFields={CustomUserProfileFormFields}
+                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
               />
             );
           default:
