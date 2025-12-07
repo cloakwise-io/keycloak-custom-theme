@@ -1,0 +1,22 @@
+name: Build and upload release assets
+on:
+  release:
+    types: [published]
+
+jobs:
+  build_and_upload:
+    name: Build and upload release assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.2
+      - run: pnpm install
+      - run: pnpm run build-keycloak-theme
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist_keycloak/keycloak-theme-*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

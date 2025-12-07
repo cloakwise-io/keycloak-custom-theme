@@ -1,5 +1,11 @@
 # Keycloak Custom Theme
 
+![build status](https://github.com/paulgrammer/keycloak-custom-theme/actions/workflows/build.yaml/badge.svg)
+[![Trivy vulnerability scanner](https://github.com/paulgrammer/keycloak-custom-theme/actions/workflows/trivy.yaml/badge.svg?branch=main)](https://github.com/paulgrammer/keycloak-custom-theme/actions/workflows/trivy.yaml)
+<a href="https://ko-fi.com/paulgrammer">
+  <img src="https://ko-fi.com/img/githubbutton_sm.svg" width="150" alt="Support on Ko-fi"/>
+</a>
+
 A modern, production-ready custom theme for Keycloak built with React, TypeScript, and shadcn/ui components. This theme provides a visually stunning authentication experience with glassmorphism effects, smooth animations, and a fully responsive design.
 
 ## Features

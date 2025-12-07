@@ -4,3 +4,7 @@
   pointer-events: none;
   display: none;
 }
+
+span[data-kc-msg="locale"] {
+  display: none !important;
+}
