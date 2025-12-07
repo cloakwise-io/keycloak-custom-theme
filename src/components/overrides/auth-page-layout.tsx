@@ -42,9 +42,7 @@ export default function AuthPageLayout({
       <div className="relative flex min-h-svh items-center justify-center">
         {/* Centered Auth form */}
         <div className="relative flex flex-col gap-4 py-6 px-0 md:p-6 md:px-6 lg:p-10 lg:px-12 w-full md:max-w-lg">
-          <div className="w-full animate-in fade-in slide-in-from-bottom duration-500 delay-150">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </div>
