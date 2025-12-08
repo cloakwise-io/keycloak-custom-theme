@@ -2,7 +2,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "@/login/KcContext";
 import type { I18n } from "@/login/i18n";
 import { Button } from "@/components/ui";
-import { TemplateContent, TemplateFooter } from "@/login/TemplateComponents";
+import { TemplateContent } from "@/login/TemplateComponents";
 
 export default function LoginOauthGrant(props: PageProps<Extract<KcContext, { pageId: "login-oauth-grant.ftl" }>, I18n>) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
