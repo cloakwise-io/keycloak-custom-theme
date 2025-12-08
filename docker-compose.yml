@@ -3,7 +3,7 @@ services:
     image: postgres:17
     container_name: postgres
     environment:
-      POSTGRES_DB: sso
+      POSTGRES_DB: keycloak-custom-theme
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
     volumes:
@@ -11,13 +11,13 @@ services:
     networks:
       - keycloak-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U keycloak -d sso"]
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak-custom-theme"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   keycloak:
-    image: sso:latest
+    image: cloakwise-io/keycloak-custom-theme:latest
     build:
       context: .
     container_name: keycloak
@@ -25,7 +25,7 @@ services:
     environment:
       # set hostname if you are behind a reverse proxy
       # KC_HOSTNAME: localhost
-      KC_DB_URL: jdbc:postgresql://postgres:5432/sso
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak-custom-theme
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: password
       # Set default values for admin user

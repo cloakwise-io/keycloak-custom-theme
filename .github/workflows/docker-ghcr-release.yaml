@@ -14,7 +14,6 @@ on:
       - 'Dockerfile'
       - 'src/**'
       - '.github/workflows/docker-ghcr-release.yaml'
-      - '.github/workflows/upload-release-assets.yaml'
 
 env:
   REGISTRY: ghcr.io
@@ -55,9 +54,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.image.title=CSI Driver Rclone
-            org.opencontainers.image.description=CSI Rclone Driver for Kubernetes - Mount cloud storage as persistent volumes
-            org.opencontainers.image.vendor=VeloxPack
+            org.opencontainers.image.title=Keycloak Custom Theme
+            org.opencontainers.image.description=Keycloak Custom Theme - A modern, production-ready custom theme for Keycloak built with React, TypeScript, and shadcn/ui components.
+            org.opencontainers.image.vendor=Cloakwise.io
 
       - name: Build and push Docker image
         id: push

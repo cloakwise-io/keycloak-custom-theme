@@ -3,7 +3,7 @@ ARCH ?= amd64
 
 IMAGE_VERSION ?= latest
 IMAGENAME ?= keycloak-custom-theme
-REGISTRY ?= ghcr.io/paulgrammer
+REGISTRY ?= ghcr.io/cloakwise-io
 IMAGE_TAG = $(REGISTRY)/$(IMAGENAME):$(IMAGE_VERSION)
 IMAGE_TAG_LATEST = $(REGISTRY)/$(IMAGENAME):latest
 KEYCLOAK_VERSION ?= 26.4.7
