@@ -1,3 +1,5 @@
+import "../global.css";
+import "../custom.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/account";
 import type { KcContext } from "./KcContext";
@@ -27,7 +29,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Account
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "password.ftl":
@@ -35,7 +37,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Password
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "sessions.ftl":
@@ -43,7 +45,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Sessions
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "totp.ftl":
@@ -51,7 +53,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Totp
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "applications.ftl":
@@ -59,7 +61,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Applications
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "log.ftl":
@@ -67,7 +69,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<Log
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					case "federatedIdentity.ftl":
@@ -75,7 +77,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
 							<FederatedIdentity
 								{...{ kcContext, i18n, classes }}
 								Template={CustomTemplate}
-								doUseDefaultCss={true}
+								doUseDefaultCss={false}
 							/>
 						);
 					default:

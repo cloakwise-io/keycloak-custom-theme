@@ -1,26 +1,19 @@
 import { useState } from "react";
-import { clsx } from "keycloakify/tools/clsx";
-import { getKcClsx } from "keycloakify/account/lib/kcClsx";
 import type { PageProps } from "keycloakify/account/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Field, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
+import { PasswordInput } from "@/components/overrides/custom-password-input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Lock } from "lucide-react";
 
 export default function Password(props: PageProps<Extract<KcContext, { pageId: "password.ftl" }>, I18n>) {
-  const { kcContext, i18n, doUseDefaultCss, Template } = props;
-
-  const classes = {
-    ...props.classes,
-    kcBodyClass: clsx(props.classes?.kcBodyClass, "password")
-  };
-
-  const { kcClsx } = getKcClsx({
-    doUseDefaultCss,
-    classes
-  });
+  const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
   const { url, password, account, stateChecker } = kcContext;
 
-  const { msgStr, msg } = i18n;
+  const { msg, msgStr } = i18n;
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -83,127 +76,115 @@ export default function Password(props: PageProps<Extract<KcContext, { pageId: "
       }}
       active="password"
     >
-      <div className="row">
-        <div className="col-md-10">
-          <h2>{msg("changePasswordHtmlTitle")}</h2>
-        </div>
-        <div className="col-md-2 subtitle">
-          <span className="subtitle">{msg("allFieldsRequired")}</span>
-        </div>
-      </div>
-
-      <form action={url.passwordUrl} className="form-horizontal" method="post">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={account.username ?? ""}
-          autoComplete="username"
-          readOnly
-          style={{ display: "none" }}
-        />
-
-        {password.passwordSet && (
-          <div className="form-group">
-            <div className="col-sm-2 col-md-2">
-              <label htmlFor="password" className="control-label">
-                {msg("password")}
-              </label>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Lock className="h-5 w-5" />
+              {msg("changePasswordHtmlTitle")}
             </div>
-            <div className="col-sm-10 col-md-10">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                autoFocus
-                autoComplete="current-password"
-                value={currentPassword}
-                onChange={event => setCurrentPassword(event.target.value)}
-              />
-            </div>
-          </div>
-        )}
-
-        <input type="hidden" id="stateChecker" name="stateChecker" value={stateChecker} />
-
-        <div className="form-group">
-          <div className="col-sm-2 col-md-2">
-            <label htmlFor="password-new" className="control-label">
-              {msg("passwordNew")}
-            </label>
-          </div>
-          <div className="col-sm-10 col-md-10">
+            <span className="text-sm text-muted-foreground font-normal">{msg("allFieldsRequired")}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form action={url.passwordUrl} method="post" className="space-y-6">
             <input
-              type="password"
-              className="form-control"
-              id="password-new"
-              name="password-new"
-              autoComplete="new-password"
-              value={newPassword}
-              onChange={event => {
-                const newPassword = event.target.value;
-
-                setNewPassword(newPassword);
-                if (hasNewPasswordBlurred) {
-                  checkNewPassword(newPassword);
-                }
-              }}
-              onBlur={() => {
-                setHasNewPasswordBlurred(true);
-                checkNewPassword(newPassword);
-              }}
+              type="text"
+              id="username"
+              name="username"
+              value={account.username ?? ""}
+              autoComplete="username"
+              readOnly
+              style={{ display: "none" }}
             />
-          </div>
-        </div>
 
-        <div className="form-group">
-          <div className="col-sm-2 col-md-2">
-            <label htmlFor="password-confirm" className="control-label two-lines">
-              {msg("passwordConfirm")}
-            </label>
-          </div>
+            <FieldGroup>
+              {password.passwordSet && (
+                <Field>
+                  <FieldLabel htmlFor="password">
+                    {msg("password")}
+                  </FieldLabel>
+                  <PasswordInput
+                    id="password"
+                    name="password"
+                    autoFocus
+                    autoComplete="current-password"
+                    value={currentPassword}
+                    onChange={event => setCurrentPassword(event.target.value)}
+                  />
+                </Field>
+              )}
 
-          <div className="col-sm-10 col-md-10">
-            <input
-              type="password"
-              className="form-control"
-              id="password-confirm"
-              name="password-confirm"
-              autoComplete="new-password"
-              value={newPasswordConfirm}
-              onChange={event => {
-                const newPasswordConfirm = event.target.value;
+              <input type="hidden" id="stateChecker" name="stateChecker" value={stateChecker} />
 
-                setNewPasswordConfirm(newPasswordConfirm);
-                if (hasNewPasswordConfirmBlurred) {
-                  checkNewPasswordConfirm(newPasswordConfirm);
-                }
-              }}
-              onBlur={() => {
-                setHasNewPasswordConfirmBlurred(true);
-                checkNewPasswordConfirm(newPasswordConfirm);
-              }}
-            />
-          </div>
-        </div>
+              <Field>
+                <FieldLabel htmlFor="password-new">
+                  {msg("passwordNew")}
+                </FieldLabel>
+                <PasswordInput
+                  id="password-new"
+                  name="password-new"
+                  autoComplete="new-password"
+                  value={newPassword}
+                  onChange={event => {
+                    const newPassword = event.target.value;
 
-        <div className="form-group">
-          <div id="kc-form-buttons" className="col-md-offset-2 col-md-10 submit">
-            <div>
-              <button
+                    setNewPassword(newPassword);
+                    if (hasNewPasswordBlurred) {
+                      checkNewPassword(newPassword);
+                    }
+                  }}
+                  onBlur={() => {
+                    setHasNewPasswordBlurred(true);
+                    checkNewPassword(newPassword);
+                  }}
+                />
+                {newPasswordError && (
+                  <FieldError>{newPasswordError}</FieldError>
+                )}
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="password-confirm">
+                  {msg("passwordConfirm")}
+                </FieldLabel>
+                <PasswordInput
+                  id="password-confirm"
+                  name="password-confirm"
+                  autoComplete="new-password"
+                  value={newPasswordConfirm}
+                  onChange={event => {
+                    const newPasswordConfirm = event.target.value;
+
+                    setNewPasswordConfirm(newPasswordConfirm);
+                    if (hasNewPasswordConfirmBlurred) {
+                      checkNewPasswordConfirm(newPasswordConfirm);
+                    }
+                  }}
+                  onBlur={() => {
+                    setHasNewPasswordConfirmBlurred(true);
+                    checkNewPasswordConfirm(newPasswordConfirm);
+                  }}
+                />
+                {newPasswordConfirmError && (
+                  <FieldError>{newPasswordConfirmError}</FieldError>
+                )}
+              </Field>
+            </FieldGroup>
+
+            <div className="flex justify-end">
+              <Button
                 disabled={newPasswordError !== "" || newPasswordConfirmError !== ""}
                 type="submit"
-                className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonLargeClass")}
                 name="submitAction"
                 value="Save"
               >
                 {msg("doSave")}
-              </button>
+              </Button>
             </div>
-          </div>
-        </div>
-      </form>
+          </form>
+        </CardContent>
+      </Card>
     </Template>
   );
 }

@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-"use client";
-
 import * as React from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
