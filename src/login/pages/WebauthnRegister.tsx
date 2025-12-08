@@ -1,4 +1,4 @@
-import { Key } from "lucide-react";
+import { Key, Fingerprint } from "lucide-react";
 import { useScript } from "keycloakify/login/pages/WebauthnRegister.useScript";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { Button, Checkbox } from "@/components/ui";
@@ -46,9 +46,10 @@ export default function WebauthnRegister(props: PageProps<Extract<KcContext, { p
         <Button
           type="button"
           id={authButtonId}
-          className="w-full"
+          className="w-full gap-2"
           autoFocus
         >
+          <Fingerprint className="w-4 h-4" />
           {msgStr("doRegisterSecurityKey")}
         </Button>
       </TemplateContent>

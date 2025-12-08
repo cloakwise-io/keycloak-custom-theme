@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Key } from "lucide-react";
+import { Key, Fingerprint } from "lucide-react";
 import { useScript } from "keycloakify/login/pages/LoginPasskeysConditionalAuthenticate.useScript";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
@@ -150,7 +150,8 @@ export default function LoginPasskeysConditionalAuthenticate(
               </form>
             )}
             <div id="kc-form-passkey-button" style={{ display: "none" }}>
-              <Button id={authButtonId} type="button" autoFocus className="w-full">
+              <Button id={authButtonId} type="button" autoFocus className="w-full gap-2">
+                <Fingerprint className="w-4 h-4" />
                 {msgStr("passkey-doAuthenticate")}
               </Button>
             </div>

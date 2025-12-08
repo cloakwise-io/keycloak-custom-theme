@@ -99,7 +99,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
               <div id="kc-content-wrapper" className="space-y-4">
                 {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
                 {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                  <DisplayMessage message={message} />
+                  <div className="mx-4 md:mx-0">
+                    <DisplayMessage message={message} />
+                  </div>
                 )}
                 <TemplateShell className="w-full rounded-none md:rounded-xl border-0 md:border shadow-none md:shadow-sm">
                   {headerNode && !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) && (

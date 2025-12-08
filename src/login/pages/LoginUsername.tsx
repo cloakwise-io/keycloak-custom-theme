@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Fingerprint } from "lucide-react";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
+import { useScript } from "keycloakify/login/pages/LoginUsername.useScript";
 import type { KcContext } from "@/login/KcContext";
 import type { I18n } from "@/login/i18n";
 import { Button, Input, Checkbox, Field, FieldLabel, FieldSeparator } from "@/components/ui";
@@ -9,9 +11,17 @@ import { cn } from "@/lib/utils";
 
 export default function LoginUsername(props: PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-  const { social, realm, url, usernameHidden, login, registrationDisabled, messagesPerField } = kcContext;
+  const { social, realm, url, usernameHidden, login, registrationDisabled, messagesPerField, enableWebAuthnConditionalUI, authenticators } = kcContext;
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
   const { msg, msgStr } = i18n;
+
+  const webAuthnButtonId = "authenticateWebAuthnButton";
+
+  useScript({
+    webAuthnButtonId,
+    kcContext,
+    i18n
+  });
 
   return (
     <Template
@@ -54,7 +64,9 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                   />
                   {messagesPerField.existsError("username") && (
                     <span
+                      id="input-error"
                       className="text-destructive text-sm"
+                      aria-live="polite"
                       dangerouslySetInnerHTML={{
                         __html: messagesPerField.getFirstError("username")
                       }}
@@ -63,22 +75,57 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                 </Field>
               )}
 
-              {realm.rememberMe && !usernameHidden && (
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="rememberMe" name="rememberMe" defaultChecked={!!login.rememberMe} tabIndex={3} />
-                  <label
-                    htmlFor="rememberMe"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {msg("rememberMe")}
-                  </label>
-                </div>
-              )}
+              <div id="kc-form-options">
+                {realm.rememberMe && !usernameHidden && (
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="rememberMe" name="rememberMe" defaultChecked={!!login.rememberMe} tabIndex={3} />
+                    <label
+                      htmlFor="rememberMe"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {msg("rememberMe")}
+                    </label>
+                  </div>
+                )}
+              </div>
 
-              <Button tabIndex={4} type="submit" className="w-full" disabled={isLoginButtonDisabled}>
-                {msgStr("doLogIn")}
-              </Button>
+              <div id="kc-form-buttons">
+                <Button tabIndex={4} type="submit" className="w-full" disabled={isLoginButtonDisabled} id="kc-login">
+                  {msgStr("doLogIn")}
+                </Button>
+              </div>
             </form>
+
+            {enableWebAuthnConditionalUI && (
+              <>
+                <form id="webauth" action={url.loginAction} method="post" className="hidden">
+                  <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
+                  <input type="hidden" id="authenticatorData" name="authenticatorData" />
+                  <input type="hidden" id="signature" name="signature" />
+                  <input type="hidden" id="credentialId" name="credentialId" />
+                  <input type="hidden" id="userHandle" name="userHandle" />
+                  <input type="hidden" id="error" name="error" />
+                </form>
+
+                {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
+                  <form id="authn_select" className="hidden">
+                    {authenticators.authenticators.map((authenticator, i) => (
+                      <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
+                    ))}
+                  </form>
+                )}
+
+                <Button
+                  id={webAuthnButtonId}
+                  type="button"
+                  variant="outline"
+                  className="w-full gap-2"
+                >
+                  <Fingerprint className="w-4 h-4" />
+                  {msgStr("passkey-doAuthenticate")}
+                </Button>
+              </>
+            )}
 
             {/* Social providers separator */}
             {social?.providers && social.providers.length > 0 && (
@@ -102,7 +149,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
               </div>
             )}
             {realm.registrationAllowed && !registrationDisabled && (
-              <div className="text-center text-sm">
+              <div id="kc-registration" className="text-center text-sm">
                 {msg("noAccount")}{" "}
                 <a href={url.registrationUrl} className="underline underline-offset-4" tabIndex={8}>
                   {msg("doRegister")}

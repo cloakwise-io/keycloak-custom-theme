@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Key } from "lucide-react";
+import { Key, Fingerprint } from "lucide-react";
 import { useScript } from "keycloakify/login/pages/WebauthnAuthenticate.useScript";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { Button, Field } from "@/components/ui";
@@ -105,9 +105,10 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
             id={authButtonId}
             type="button"
             autoFocus
-            className="w-full"
+            className="w-full gap-2"
             tabIndex={1}
           >
+            <Fingerprint className="w-4 h-4" />
             {msgStr("webauthn-doAuthenticate")}
           </Button>
         </Field>
