@@ -45,6 +45,7 @@ const Code = lazy(() => import("./pages/Code"));
 const DeleteAccountConfirm = lazy(() => import("./pages/DeleteAccountConfirm"));
 const FrontchannelLogout = lazy(() => import("./pages/FrontchannelLogout"));
 const LoginRecoveryAuthnCodeConfig = lazy(() => import("./pages/LoginRecoveryAuthnCodeConfig"));
+const LoginRecoveryAuthnCodeInput = lazy(() => import("./pages/LoginRecoveryAuthnCodeInput"));
 const Error = lazy(() => import("./pages/Error"));
 const Info = lazy(() => import("./pages/Info"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -302,6 +303,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
           case "login-recovery-authn-code-config.ftl":
             return (
               <LoginRecoveryAuthnCodeConfig
+                {...{ kcContext, i18n, classes }}
+                Template={LoginTemplate}
+                doUseDefaultCss={false}
+              />
+            );
+          case "login-recovery-authn-code-input.ftl":
+            return (
+              <LoginRecoveryAuthnCodeInput
                 {...{ kcContext, i18n, classes }}
                 Template={LoginTemplate}
                 doUseDefaultCss={false}
