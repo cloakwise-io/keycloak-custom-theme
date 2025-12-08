@@ -1,5 +1,5 @@
-import "./global.css";
-import "./custom.css";
+import "../global.css";
+import "../custom.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/login";
 import type { KcContext } from "./KcContext";
