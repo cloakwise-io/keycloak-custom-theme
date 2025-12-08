@@ -26,6 +26,7 @@ const LoginUpdateProfile = lazy(() => import("./pages/LoginUpdateProfile"));
 const LoginOTP = lazy(() => import("./pages/LoginOtp"));
 const WebauthnAuthenticate = lazy(() => import("./pages/WebauthnAuthenticate"));
 const WebauthnRegister = lazy(() => import("./pages/WebauthnRegister"));
+const WebauthnError = lazy(() => import("./pages/WebauthnError"));
 const Error = lazy(() => import("./pages/Error"));
 const Info = lazy(() => import("./pages/Info"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -127,6 +128,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
           case "webauthn-register.ftl":
             return (
               <WebauthnRegister
+                {...{ kcContext, i18n, classes }}
+                Template={LoginTemplate}
+                doUseDefaultCss={false}
+              />
+            );
+          case "webauthn-error.ftl":
+            return (
+              <WebauthnError
                 {...{ kcContext, i18n, classes }}
                 Template={LoginTemplate}
                 doUseDefaultCss={false}
