@@ -30,8 +30,6 @@ export function NavUser({
   user,
   logoutUrl,
   logoutLabel,
-  enabledLanguages,
-  currentLanguage,
   referrer,
   referrerLabel,
 }: {
@@ -42,8 +40,6 @@ export function NavUser({
   }
   logoutUrl?: string
   logoutLabel?: string
-  enabledLanguages?: Array<{ languageTag: string; label: string; href: string }>
-  currentLanguage?: { languageTag: string; label: string }
   referrer?: { url: string; name: string }
   referrerLabel?: string
 }) {

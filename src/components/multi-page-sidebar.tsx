@@ -30,7 +30,7 @@ type MultiPageSidebarProps = React.ComponentProps<typeof Sidebar> & {
 
 export function MultiPageSidebar({ kcContext, i18n, active, ...props }: MultiPageSidebarProps) {
   const { url, features, account, referrer } = kcContext
-  const { msgStr, currentLanguage, enabledLanguages } = i18n
+  const { msgStr } = i18n
 
   // Build navigation items
   const navItems = [
@@ -113,8 +113,6 @@ export function MultiPageSidebar({ kcContext, i18n, active, ...props }: MultiPag
           }}
           logoutUrl={url.getLogoutUrl()}
           logoutLabel={msgStr("doSignOut")}
-          enabledLanguages={enabledLanguages}
-          currentLanguage={currentLanguage}
           referrer={referrer}
           referrerLabel={referrer ? msgStr("backTo", referrer.name) : undefined}
         />

@@ -1,6 +1,6 @@
 import "../global.css";
 import "../custom.css";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, ComponentType } from "react";
 import type { ClassKey } from "keycloakify/account";
 import type { KcContext } from "./KcContext";
 import { useI18n } from "./i18n";
@@ -16,74 +16,41 @@ const Applications = lazy(() => import("./pages/Applications"));
 const Log = lazy(() => import("./pages/Log"));
 const FederatedIdentity = lazy(() => import("./pages/FederatedIdentity"));
 
+const PAGE_COMPONENTS: Partial<Record<KcContext["pageId"], ComponentType<any>>> = {
+	"account.ftl": Account,
+	"password.ftl": Password,
+	"sessions.ftl": Sessions,
+	"totp.ftl": Totp,
+	"applications.ftl": Applications,
+	"log.ftl": Log,
+	"federatedIdentity.ftl": FederatedIdentity,
+};
+
 export default function KcPage(props: { kcContext: KcContext }) {
 	const { kcContext } = props;
 	const { i18n } = useI18n({ kcContext });
 
+	const PageComponent = PAGE_COMPONENTS[kcContext.pageId];
+
 	return (
 		<Suspense>
-			{(() => {
-				switch (kcContext.pageId) {
-					case "account.ftl":
-						return (
-							<Account
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "password.ftl":
-						return (
-							<Password
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "sessions.ftl":
-						return (
-							<Sessions
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "totp.ftl":
-						return (
-							<Totp
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "applications.ftl":
-						return (
-							<Applications
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "log.ftl":
-						return (
-							<Log
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					case "federatedIdentity.ftl":
-						return (
-							<FederatedIdentity
-								{...{ kcContext, i18n, classes }}
-								Template={CustomTemplate}
-								doUseDefaultCss={false}
-							/>
-						);
-					default:
-						return <DefaultPage kcContext={kcContext} i18n={i18n} classes={classes} Template={Template} doUseDefaultCss={true} />;
-				}
-			})()}
+			{PageComponent ? (
+				<PageComponent
+					kcContext={kcContext}
+					i18n={i18n}
+					classes={classes}
+					Template={CustomTemplate}
+					doUseDefaultCss={false}
+				/>
+			) : (
+				<DefaultPage
+					kcContext={kcContext}
+					i18n={i18n}
+					classes={classes}
+					Template={Template}
+					doUseDefaultCss={true}
+				/>
+			)}
 		</Suspense>
 	);
 }
