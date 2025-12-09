@@ -1,19 +1,10 @@
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+import { type LucideIcon } from "lucide-react"
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
+  SidebarMenuItem
 } from "@/components/ui/sidebar"
 
 export function NavMain({
@@ -32,37 +23,21 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarMenu>
+      <SidebarMenu className="space-y-1">
         {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title} isActive={item.isActive}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton
+              tooltip={item.title}
+              isActive={item.isActive}
+              asChild
+              className="transition-all duration-200 hover:translate-x-1 data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-semibold"
+            >
+              <a href={item.url} className="flex items-center gap-3">
+                {item.icon && <item.icon className="transition-transform duration-200 group-hover:scale-110" />}
+                <span>{item.title}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>

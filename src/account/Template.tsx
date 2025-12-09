@@ -211,9 +211,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
       <SidebarProvider>
         <MultiPageSidebar kcContext={kcContext} i18n={i18n} active={active} />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300">
             <div className="flex items-center gap-2 px-4 flex-1">
-              <SidebarTrigger className="-ml-1" />
+              <SidebarTrigger className="-ml-1 transition-all duration-200 hover:scale-110" />
               <Separator
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
@@ -221,13 +221,16 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href={url.accountUrl}>
+                    <BreadcrumbLink
+                      href={url.accountUrl}
+                      className="transition-colors duration-200 hover:text-primary"
+                    >
                       {msgStr("accountManagementTitle")}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>{getPageTitle()}</BreadcrumbPage>
+                    <BreadcrumbPage className="font-medium">{getPageTitle()}</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -241,9 +244,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
               <ThemeToggle />
             </div>
           </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col gap-6 p-6 pt-6">
           {message !== undefined && (
-            <div className="mb-4">
+            <div className="animate-in slide-in-from-top-2 duration-300">
               <DisplayMessage message={message} />
             </div>
           )}

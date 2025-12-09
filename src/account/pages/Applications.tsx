@@ -118,10 +118,12 @@ export default function Applications(props: PageProps<Extract<KcContext, { pageI
   return (
     <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} active="applications">
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Terminal className="h-5 w-5" />
-            {msg("applicationsHtmlTitle")}
+        <CardHeader className="space-y-1 pb-6">
+          <CardTitle className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary">
+              <Terminal className="h-5 w-5" />
+            </div>
+            <span className="text-2xl">{msg("applicationsHtmlTitle")}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -132,31 +134,37 @@ export default function Applications(props: PageProps<Extract<KcContext, { pageI
             <div className="overflow-hidden rounded-lg border">
               <Table>
                 <TableHeader className="bg-muted">
-                  <TableRow>
-                    <TableHead>{msg("application")}</TableHead>
-                    <TableHead>{msg("availableRoles")}</TableHead>
-                    <TableHead>{msg("grantedPermissions")}</TableHead>
-                    <TableHead>{msg("additionalGrants")}</TableHead>
-                    <TableHead>{msg("action")}</TableHead>
+                  <TableRow className="hover:bg-muted">
+                    <TableHead className="font-semibold">{msg("application")}</TableHead>
+                    <TableHead className="font-semibold">{msg("availableRoles")}</TableHead>
+                    <TableHead className="font-semibold">{msg("grantedPermissions")}</TableHead>
+                    <TableHead className="font-semibold">{msg("additionalGrants")}</TableHead>
+                    <TableHead className="font-semibold">{msg("action")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {applications.map(application => (
-                    <TableRow key={application.client.clientId}>
-                      <TableCell>
+                    <TableRow
+                      key={application.client.clientId}
+                      className="transition-colors duration-150 hover:bg-muted/30"
+                    >
+                      <TableCell className="font-medium">
                         {application.effectiveUrl && (
-                          <a href={application.effectiveUrl} className="text-primary hover:underline">
+                          <a
+                            href={application.effectiveUrl}
+                            className="text-primary hover:underline transition-all duration-200 hover:text-primary/80"
+                          >
                             {(application.client.name && advancedMsg(application.client.name)) || application.client.clientId}
                           </a>
                         )}
                         {!application.effectiveUrl && ((application.client.name && advancedMsg(application.client.name)) || application.client.clientId)}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="text-sm">
                         {renderAvailableRoles(application)}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="text-sm">
                         {application.client.consentRequired ? (
                           application.clientScopesGranted.map((claim: string) => (
                             <span key={claim}>
@@ -165,11 +173,11 @@ export default function Applications(props: PageProps<Extract<KcContext, { pageI
                             </span>
                           ))
                         ) : (
-                          <strong>{msg("fullAccess")}</strong>
+                          <strong className="text-primary">{msg("fullAccess")}</strong>
                         )}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="text-sm">
                         {application.additionalGrants.map((grant: string) => (
                           <span key={grant}>
                             {advancedMsg(grant)}
@@ -187,6 +195,7 @@ export default function Applications(props: PageProps<Extract<KcContext, { pageI
                             id={`revoke-${application.client.clientId}`}
                             name="clientId"
                             value={application.client.id}
+                            className="transition-all duration-200 hover:scale-105 hover:shadow-md"
                           >
                             {msg("revoke")}
                           </Button>

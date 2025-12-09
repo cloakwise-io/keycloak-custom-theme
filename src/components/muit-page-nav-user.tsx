@@ -56,11 +56,11 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-8 w-8 rounded-full ring-2 ring-transparent transition-all duration-200 hover:ring-primary/20">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-full bg-primary/10 text-primary font-semibold">
                   {user.name
                     .split(" ")
                     .map((n) => n[0])
@@ -70,23 +70,23 @@ export function NavUser({
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg border animate-in fade-in-50 zoom-in-95 duration-200"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+              <div className="flex items-center gap-3 px-2 py-2 text-left text-sm">
+                <Avatar className="size-10 rounded-full ring-2 ring-primary/10">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">
+                  <AvatarFallback className="rounded-full bg-primary/10 text-primary font-semibold">
                     {user.name
                       .split(" ")
                       .map((n) => n[0])
@@ -96,8 +96,8 @@ export function NavUser({
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -105,7 +105,7 @@ export function NavUser({
             {referrer && referrerLabel && (
               <>
                 <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className="cursor-pointer">
                     <a href={referrer.url}>{referrerLabel}</a>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
@@ -113,7 +113,7 @@ export function NavUser({
               </>
             )}
             {logoutUrl && logoutLabel && (
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10">
                 <a href={logoutUrl} className="flex items-center gap-2">
                   <LogOut className="h-4 w-4" />
                   <span>{logoutLabel}</span>
