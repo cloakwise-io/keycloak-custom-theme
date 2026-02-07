@@ -116,7 +116,6 @@ export default function LoginPasskeysConditionalAuthenticate(
                 style={{ display: "none" }}
                 onSubmit={event => {
                   try {
-                    // @ts-expect-error
                     event.target.login.disabled = true;
                   } catch {}
                   return true;
