@@ -164,6 +164,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                       displayName={p.displayName}
                       loginUrl={p.loginUrl}
                       id={`social-${p.alias}`}
+                      iconClasses={p.iconClasses}
                     />
                   ))}
                 </div>
