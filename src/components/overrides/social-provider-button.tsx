@@ -2,11 +2,14 @@ import { Button } from "@/components/ui/button";
 import { getProviderIcon } from "./provider-icons";
 import { cn } from "@/lib/utils";
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 type SocialProviderButtonProps = {
   alias: string;
   displayName: string;
   loginUrl: string;
   id?: string;
+  iconClasses?: string;
 };
 
 const getProviderStyles = (alias: string) => {
@@ -39,7 +42,7 @@ const getProviderStyles = (alias: string) => {
   }
 };
 
-export function SocialProviderButton({ alias, displayName, loginUrl, id }: SocialProviderButtonProps) {
+export function SocialProviderButton({ alias, displayName, loginUrl, id, iconClasses }: SocialProviderButtonProps) {
   return (
     <Button
       variant="outline"
@@ -52,9 +55,7 @@ export function SocialProviderButton({ alias, displayName, loginUrl, id }: Socia
       asChild
     >
       <a href={loginUrl} id={id} className="flex items-center justify-center gap-2">
-        <span className="transition-transform duration-200 group-hover:scale-110">
-          {getProviderIcon(alias)}
-        </span>
+        {getProviderIcon(alias, iconClasses)}
         <span className="ml-2 font-medium">{displayName}</span>
       </a>
     </Button>

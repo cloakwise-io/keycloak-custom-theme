@@ -265,6 +265,28 @@ export const WithOneSocialProvider: Story = {
   )
 };
 
+export const WithSocialProviderWithCustomIcon: Story = {
+  render: args => (
+    <KcPageStory
+      {...args}
+      kcContext={{
+        social: {
+          displayInfo: true,
+          providers: [
+            {
+              loginUrl: "reddit",
+              alias: "reddit",
+              providerId: "reddit",
+              displayName: "Reddit",
+              iconClasses: "fa-brands fa-reddit"
+            },
+          ]
+        }
+      }}
+    />
+  )
+};
+
 export const WithTwoSocialProviders: Story = {
   render: args => (
     <KcPageStory
