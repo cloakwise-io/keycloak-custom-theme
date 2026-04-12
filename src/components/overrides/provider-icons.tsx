@@ -299,7 +299,39 @@ export const getProviderIcon = (providerAlias: string, iconClasses?: string) => 
         </SvgIconWrapper>
       );
     default:
-      if (iconClasses) return <i className={iconClasses + " text-[16px] flex-shrink-0 transition-transform duration-200 group-hover:scale-110"} />;
+      if (iconClasses) {
+        const dataUriRegex =
+          /(data:image\/svg\+xml(?:;base64)?,.*?(?:<\/svg>|%3C\/svg%3E))/i;
+        const match = iconClasses.match(dataUriRegex);
+        console.log(match);
+
+        if (match) {
+          const dataUri = match[0];
+          console.log(dataUri);
+          const remainingClasses = iconClasses.replace(match[0], "").trim();
+          console.log(remainingClasses);
+
+          return (
+            <SvgIconWrapper>
+              <img
+                src={dataUri}
+                alt=""
+                aria-hidden="true"
+                className={`w-4 h-4 object-contain ${remainingClasses}`}
+              />
+            </SvgIconWrapper>
+          );
+        }
+
+        return (
+          <i
+            className={
+              iconClasses +
+              " text-[16px] flex-shrink-0 transition-transform duration-200 group-hover:scale-110"
+            }
+          />
+        );
+      }
       return null;
   }
 };

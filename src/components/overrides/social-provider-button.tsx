@@ -1,8 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { getProviderIcon } from "./provider-icons";
 import { cn } from "@/lib/utils";
-
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 type SocialProviderButtonProps = {
   alias: string;
@@ -42,7 +41,13 @@ const getProviderStyles = (alias: string) => {
   }
 };
 
-export function SocialProviderButton({ alias, displayName, loginUrl, id, iconClasses }: SocialProviderButtonProps) {
+export function SocialProviderButton({
+  alias,
+  displayName,
+  loginUrl,
+  id,
+  iconClasses
+}: SocialProviderButtonProps) {
   return (
     <Button
       variant="outline"
@@ -61,4 +66,3 @@ export function SocialProviderButton({ alias, displayName, loginUrl, id, iconCla
     </Button>
   );
 }
-
