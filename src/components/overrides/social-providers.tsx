@@ -35,7 +35,7 @@ export const SocialProviders: React.FC<SocialProvidersProps> = ({
           {providers.map(p => (
             <Button key={p.alias} variant="outline" className="w-full" asChild>
               <a href={p.loginUrl}>
-                {getProviderIcon(p.alias)}
+                {getProviderIcon(p.alias, p.iconClasses)}
                 <span className="ml-2">{p.displayName}</span>
               </a>
             </Button>
